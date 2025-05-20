@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 50;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -18,6 +18,8 @@
 		C6BDB70124B34FEA007F96FC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C6BDB6FF24B34FEA007F96FC /* LaunchScreen.storyboard */; };
 		C6BDB70B24B359D2007F96FC /* UIView+Constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6BDB70A24B359D2007F96FC /* UIView+Constraints.swift */; };
 		C6BDB70D24B3B72C007F96FC /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6BDB70C24B3B72C007F96FC /* CustomTextField.swift */; };
+		C6F34EBC2DDBEE24003DCE7A /* Binder.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6F34EBB2DDBEE20003DCE7A /* Binder.swift */; };
+		C6F34EBE2DDBF52D003DCE7A /* ViewCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6F34EBD2DDBF527003DCE7A /* ViewCode.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +38,8 @@
 		C6BDB70224B34FEA007F96FC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C6BDB70A24B359D2007F96FC /* UIView+Constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Constraints.swift"; sourceTree = "<group>"; };
 		C6BDB70C24B3B72C007F96FC /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
+		C6F34EBB2DDBEE20003DCE7A /* Binder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Binder.swift; sourceTree = "<group>"; };
+		C6F34EBD2DDBF527003DCE7A /* ViewCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewCode.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +74,7 @@
 		C64E89C824CB1D5400EF9B4E /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				C6BDB70C24B3B72C007F96FC /* CustomTextField.swift */,
 				C64E89C924CB1D6E00EF9B4E /* ImagePicker.swift */,
 			);
 			path = Components;
@@ -96,6 +101,7 @@
 		C6BDB6F024B34FE9007F96FC /* Schedule */ = {
 			isa = PBXGroup;
 			children = (
+				C6F34EBA2DDBEE12003DCE7A /* Utilities */,
 				C64E89C824CB1D5400EF9B4E /* Components */,
 				C6BDB6F124B34FE9007F96FC /* AppDelegate.swift */,
 				C6BDB6F324B34FE9007F96FC /* SceneDelegate.swift */,
@@ -105,10 +111,18 @@
 				C6BDB70224B34FEA007F96FC /* Info.plist */,
 				C6BDB6FA24B34FE9007F96FC /* Schedule.xcdatamodeld */,
 				C6BDB70A24B359D2007F96FC /* UIView+Constraints.swift */,
-				C6BDB70C24B3B72C007F96FC /* CustomTextField.swift */,
 				C668EBBB24B7BDB800BFCAA0 /* String+Misc.swift */,
 			);
 			path = Schedule;
+			sourceTree = "<group>";
+		};
+		C6F34EBA2DDBEE12003DCE7A /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				C6F34EBD2DDBF527003DCE7A /* ViewCode.swift */,
+				C6F34EBB2DDBEE20003DCE7A /* Binder.swift */,
+			);
+			path = Utilities;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -122,7 +136,6 @@
 				C6BDB6EA24B34FE9007F96FC /* Sources */,
 				C6BDB6EB24B34FE9007F96FC /* Frameworks */,
 				C6BDB6EC24B34FE9007F96FC /* Resources */,
-				E9480FF3D7120C17050B9D08 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -201,23 +214,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		E9480FF3D7120C17050B9D08 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Schedule/Pods-Schedule-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Schedule/Pods-Schedule-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Schedule/Pods-Schedule-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -226,6 +222,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				C6BDB6F624B34FE9007F96FC /* RegisterUserViewController.swift in Sources */,
+				C6F34EBE2DDBF52D003DCE7A /* ViewCode.swift in Sources */,
+				C6F34EBC2DDBEE24003DCE7A /* Binder.swift in Sources */,
 				C6BDB6F224B34FE9007F96FC /* AppDelegate.swift in Sources */,
 				C6BDB70D24B3B72C007F96FC /* CustomTextField.swift in Sources */,
 				C6BDB6FC24B34FE9007F96FC /* Schedule.xcdatamodeld in Sources */,

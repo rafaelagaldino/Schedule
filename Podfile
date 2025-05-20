@@ -6,6 +6,6 @@ target 'Schedule' do
   use_frameworks!
 
   # Pods for Schedule
-    pod 'RxSwift'
-    pod 'RxCocoa'
+#    pod 'RxSwift'
+#    pod 'RxCocoa'
 end

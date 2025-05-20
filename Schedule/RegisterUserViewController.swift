@@ -9,20 +9,56 @@
 import UIKit
 import CoreData
 
-class RegisterUserViewController: UIViewController {
+class RegisterUserViewController: UIViewController, ViewCode {
     private let scrollView = UIScrollView()
-    private let container = UIView()
-    private var imageView = UIView(frame: CGRect(x: 0, y: 0, width: 125, height: 125))
-    private var photoImage = UIImageView(frame: CGRect(x: 0, y: 0, width: 125, height: 125))
-    private var photoButton = UIButton()
     
-    private let stackView = UIStackView()
-    private let name = CustomTextField()
-    private let nickName = CustomTextField()
-    private let cpf = CustomTextField()
-    private let email = CustomTextField()
-    private let phoneNumber = CustomTextField()
-    private let saveButton = UIButton()
+    lazy var container: UIView = {
+        let view = UIView()
+        view.backgroundColor = #colorLiteral(red: 0.1176470588, green: 0.1215686275, blue: 0.1254901961, alpha: 1)
+        return view
+    }()
+    
+    lazy var imageView: UIView = {
+        let view = UIView()
+        view.layer.borderWidth = 2
+        view.layer.borderColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        view.backgroundColor = #colorLiteral(red: 0.1176470588, green: 0.1215686275, blue: 0.1254901961, alpha: 1)
+        view.clipsToBounds = true
+        view.layer.masksToBounds = true
+        return view
+    }()
+    
+    lazy var photoImage: UIImageView = {
+        let image = UIImageView(image: UIImage(named: "eu"))
+        image.layer.masksToBounds = true
+        image.contentMode = .scaleAspectFill
+        image.isUserInteractionEnabled = true
+        return image
+    }()
+        
+    lazy var stackView: UIStackView = {
+        var stack = UIStackView()
+        stack.axis = .vertical
+        stack.alignment = .fill
+        stack.spacing = 20
+        stack.distribution = .fillProportionally
+        return stack
+    }()
+    
+    lazy var saveButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Salvar", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        button.layer.cornerRadius = 20
+        return button
+    }()
+    
+    private let name = Binder(CustomTextField())
+    private let nickName = Binder(CustomTextField())
+    private let cpf = Binder(CustomTextField())
+    private let email = Binder(CustomTextField())
+    private let phoneNumber = Binder(CustomTextField())
     
     private var frameToScroll: CGRect?
     private var scrollTo: CGFloat = 0
@@ -38,16 +74,62 @@ class RegisterUserViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = #colorLiteral(red: 0.1176470588, green: 0.1215686275, blue: 0.1254901961, alpha: 1)
         setup()
-        setupAppearance()
+//        setAppearance()
         registerObservers()
         setupCancelTap()
-        addScrollView()
-        addView()
-        addImageView()
         addPhotoImage()
-        addStackView()
         addTextField()
-        addButton()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        imageView.layer.cornerRadius = imageView.frame.width / 2
+        photoImage.layer.cornerRadius = photoImage.frame.width / 2
+    }
+
+    
+    func setupHierarchy() {
+        imagePicker.delegate = self
+        view.addSubview(scrollView)
+        scrollView.addSubview(container)
+        container.addSubview(imageView)
+        imageView.addSubview(photoImage)
+        container.addSubview(stackView)
+        container.addSubview(saveButton)
+    }
+    
+    func setupConstraints() {
+        scrollView.anchorFillSuperview()
+        
+        container.anchor(
+            top: (scrollView.topAnchor, 0.0),
+            leading: (view.leadingAnchor, 0.0),
+            trailing: (view.trailingAnchor, 0.0),
+            bottom: (view.bottomAnchor, 0.0)
+        )
+        
+        imageView.anchor(
+            centerX: (view.centerXAnchor, 0.0),
+            top: (container.topAnchor, 40.0),
+            width: 125.0,
+            height: 125.0
+        )
+        
+        photoImage.anchorFillSuperview()
+        
+        stackView.anchor(
+            top: (imageView.bottomAnchor, 30.0),
+            leading: (container.leadingAnchor, 30.0),
+            trailing: (container.trailingAnchor, 30.0)
+        )
+        
+        saveButton.anchor(
+            top: (stackView.bottomAnchor, 50),
+            leading: (container.leadingAnchor, 30),
+            trailing: (container.trailingAnchor, 30),
+            bottom: (scrollView.bottomAnchor, 30),
+            height: 44
+        )
     }
     
     func registerObservers() {
@@ -55,11 +137,7 @@ class RegisterUserViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
-    func setup() {
-        imagePicker.delegate = self
-    }
-    
-    func setupAppearance() {
+    func setupTheme() {
         title = "Cadastrar contato"
         navigationController?.navigationBar.prefersLargeTitles = true
 
@@ -81,44 +159,8 @@ class RegisterUserViewController: UIViewController {
         view.addGestureRecognizer(cancelTap)
     }
     
-    func addScrollView() {
-        view.addSubview(scrollView)
-        scrollView.anchorFillSuperview()
-    }
-
-    func addView() {
-        container.backgroundColor = #colorLiteral(red: 0.1176470588, green: 0.1215686275, blue: 0.1254901961, alpha: 1)
-        scrollView.addSubview(container)
-        container.anchor(
-            top: (scrollView.topAnchor, 0.0),
-            leading: (view.leadingAnchor, 0.0),
-            trailing: (view.trailingAnchor, 0.0),
-            bottom: (view.bottomAnchor, 0.0)
-        )
-    }
-    
-    func addImageView() {
-        imageView.layer.borderWidth = 2
-        imageView.layer.borderColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-        imageView.layer.cornerRadius = imageView.frame.width / 2
-        imageView.backgroundColor = #colorLiteral(red: 0.1176470588, green: 0.1215686275, blue: 0.1254901961, alpha: 1)
-        container.addSubview(imageView)
-        imageView.anchor(
-            centerX: (container.centerXAnchor, 0.0),
-            top: (container.topAnchor, 40.0),
-            width: 125.0,
-            height: 125.0
-        )
-    }
-    
     func addPhotoImage() {
-        photoImage.image = UIImage(named: "eu")
-        photoImage.layer.masksToBounds = true
-        photoImage.layer.cornerRadius =  photoImage.frame.width / 2
-        photoImage.contentMode = .scaleAspectFill
-        imageView.addSubview(photoImage)
         let photoTap = UITapGestureRecognizer(target: self, action: #selector(onPhotoClickEvent))
-        photoImage.isUserInteractionEnabled = true
         photoImage.addGestureRecognizer(photoTap)
     }
     
@@ -129,36 +171,23 @@ class RegisterUserViewController: UIViewController {
         present(menu, animated: true, completion: nil)
     }
     
-    func addStackView() {
-        stackView.axis = .vertical
-        stackView.alignment = .fill
-        stackView.spacing = 20
-        stackView.distribution = .fillProportionally
-        container.addSubview(stackView)
-        stackView.anchor(
-            top: (imageView.bottomAnchor, 30.0),
-            leading: (container.leadingAnchor, 30.0),
-            trailing: (container.trailingAnchor, 30.0)
-        )
-    }
-    
     func addTextField() {
         configTextField(
-            name,
+            name.value,
             placeholder: "Nome",
             mask: .none,
             keyboardType: .default
         )
 
         configTextField(
-            nickName,
+            nickName.value,
             placeholder: "Apelido",
             mask: .none,
             keyboardType: .default
         )
 
         configTextField(
-            phoneNumber,
+            phoneNumber.value,
             placeholder: "Telefone",
             mask: .phone,
             keyboardType: .decimalPad,
@@ -166,25 +195,10 @@ class RegisterUserViewController: UIViewController {
         )
 
         configTextField(
-            email,
+            email.value,
             placeholder: "E-mail",
             mask: .none,
             keyboardType: .default
-        )
-    }
-    
-    func addButton() {
-        saveButton.setTitle("Salvar", for: .normal)
-        saveButton.setTitleColor(.black, for: .normal)
-        saveButton.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-        saveButton.layer.cornerRadius = 20
-        container.addSubview(saveButton)
-        saveButton.anchor(
-            top: (stackView.bottomAnchor, 50),
-            leading: (container.leadingAnchor, 30),
-            trailing: (container.trailingAnchor, 30),
-            bottom: (scrollView.bottomAnchor, 30),
-            height: 44
         )
     }
     
@@ -250,6 +264,4 @@ extension RegisterUserViewController: ImagePickerSelectedPhoto {
     func imagePickerSelectedPhoto(_ photo: UIImage) {
         photoImage.image = photo
     }
-    
-    
 }
